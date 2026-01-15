@@ -1,0 +1,14 @@
+import { Router } from 'express';
+import { ProjectController } from '../controllers/projectController';
+import { FeedbackController } from '../controllers/feedbackController';
+
+const router = Router();
+
+// Projects
+router.post('/', ProjectController.create);
+router.get('/', ProjectController.list);
+
+// Feedback (Admin View)
+router.get('/:projectId/feedback', FeedbackController.listByProject);
+
+export default router;
