@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 import { FeedbackService } from '../services/feedbackService';
 import { ProjectService } from '../services/projectService';
-import { FeedbackType } from '../../generated/prisma/client';
+import { FeedbackType } from '../../generated/prisma/client/client';
 
 export const FeedbackController = {
     // Public Widget Endpoint
     async submit(req: Request, res: Response) {
         try {
-            const { projectKey, type, message } = req.body;
+            const { projectKey, type, message, userName, userEmail } = req.body;
 
             if (!projectKey || !message || !type) {
                 return res.status(400).json({ error: 'Missing required fields' });
@@ -18,7 +18,7 @@ export const FeedbackController = {
                 return res.status(400).json({ error: 'Invalid feedback type' });
             }
 
-            const feedback = await FeedbackService.createFeedback(projectKey, type, message);
+            const feedback = await FeedbackService.createFeedback(projectKey, type, message, userName, userEmail);
             res.status(201).json({ success: true, id: feedback.id });
         } catch (error: any) {
             console.error(error);
