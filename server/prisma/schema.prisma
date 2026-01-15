@@ -44,6 +44,8 @@ model Feedback {
   type      FeedbackType
   message   String
   sentiment String? // Optional: POSITIVE, NEUTRAL, NEGATIVE
+  userName  String?
+  userEmail String?
   createdAt DateTime     @default(now())
   projectId String
   project   Project      @relation(fields: [projectId], references: [id])

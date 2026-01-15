@@ -32,4 +32,27 @@ export const ProjectController = {
             res.status(500).json({ error: 'Failed to fetch projects' });
         }
     },
+
+    async get(req: Request, res: Response) {
+        try {
+            if (!req.user) {
+                return res.status(401).json({ error: 'Unauthorized' });
+            }
+            const { id } = req.params;
+            const project = await ProjectService.getProjectById(id as string);
+
+            if (!project) {
+                return res.status(404).json({ error: 'Project not found' });
+            }
+
+            if (project.userId !== req.user.id) {
+                return res.status(403).json({ error: 'Forbidden' });
+            }
+
+            res.json(project);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Failed to fetch project' });
+        }
+    },
 };
