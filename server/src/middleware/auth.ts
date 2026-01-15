@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { UserService } from '../services/userService';
+import jwt from 'jsonwebtoken';
 
 // Extend Express Request type
 declare global {
@@ -13,27 +14,47 @@ declare global {
     }
 }
 
-export const mockAuthMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-    const userId = req.headers['x-user-id'] as string;
-    const userEmail = req.headers['x-user-email'] as string;
-    const userName = req.headers['x-user-name'] as string;
+export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+        return next();
+    }
 
-    if (!userId || !userEmail) {
-        // For public widget routes, we might not have user headers. 
-        // Need to distinguish or apply this only to admin routes.
-        // For now, let's just proceed without user if not found, 
-        // but admin routes should check if req.user is set.
+    const token = authHeader.split(' ')[1];
+    console.log("Auth Middleware: Received Raw Token:", token);
+    if (!token) {
         return next();
     }
 
     try {
-        // In a real app we would verify a token. 
-        // Here we implicitly trust and sync the user to our DB.
-        await UserService.ensureUser(userId, userEmail, userName);
-        req.user = { id: userId, email: userEmail };
+        if (!process.env.JWT_SECRET) {
+            console.warn("JWT_SECRET is not set in environment variables. Auth verification skipped (WARNING).");
+            return next();
+        }
+
+        console.log("Auth Middleware: Verifying token...");
+        const decoded = jwt.verify(token, process.env.JWT_SECRET) as any;
+        console.log("Auth Middleware: Token decoded successfully:", decoded.email);
+
+        if (decoded.email) {
+            const userId = decoded.sub || decoded.id;
+            const userEmail = decoded.email;
+            const userName = decoded.name;
+
+            if (userEmail) {
+                const user = await UserService.ensureUser(userId || userEmail, userEmail, userName || "User");
+                console.log("Auth Middleware: User ensured in DB:", user.id);
+                req.user = { id: user.id, email: user.email };
+            } else {
+                console.warn("Auth Middleware: No email in token");
+            }
+        } else {
+            console.warn("Auth Middleware: Top level email missing in token");
+        }
+
         next();
     } catch (error) {
-        console.error("Auth Middleware Error:", error);
-        res.status(500).json({ error: 'Internal Server Error during Auth' });
+        console.error("Auth Token Verification Failed:", error);
+        return res.status(401).json({ error: 'Invalid Authentication Token' });
     }
 };

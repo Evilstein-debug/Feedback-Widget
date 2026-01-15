@@ -6,7 +6,7 @@ export const UserService = {
             where: { email },
             update: { name },
             create: {
-                id, // strictly using the ID fromauth provider if provided, or let prisma generate if we didn't pass it (but we pass it)
+                id,
                 email,
                 name,
             },

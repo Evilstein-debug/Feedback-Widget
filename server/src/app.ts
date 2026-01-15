@@ -4,7 +4,10 @@ import cors from 'cors';
 const app: Express = express();
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+    origin: process.env.CORS_ORIGIN || '*',
+    credentials: true
+}));
 app.use(express.json());
 
 import routes from './routes';
