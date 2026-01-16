@@ -68,10 +68,6 @@ export function FeedbackWidget({ projectKey }: FeedbackWidgetProps) {
         body: JSON.stringify({
           projectKey,
           ...values,
-          // Handle empty string email as undefined for backend if needed, 
-          // though backend likely handles null/empty checks. 
-          // Schema sends empty string which is fine if backend allows or we clean it.
-          // Let's send as is for now.
         }),
       })
 

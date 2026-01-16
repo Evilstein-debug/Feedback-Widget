@@ -13,6 +13,7 @@ const limiter = rateLimit({
     message: { error: "Too many requests, please try again later." }
 });
 
+//public route
 router.post('/feedback', limiter, FeedbackController.submit);
 
 export default router;

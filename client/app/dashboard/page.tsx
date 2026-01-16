@@ -93,7 +93,7 @@ export default function Dashboard() {
             <header className="flex items-center justify-between mb-8">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-                    <p className="text-muted-foreground">Manage your projects and feedbacks.</p>
+                    <p className="text-muted-foreground text-lg">Manage your projects and feedbacks.</p>
                 </div>
                 <div className="flex items-center gap-4">
                     <div className="text-sm font-medium">{session?.user?.name}</div>
