@@ -106,7 +106,7 @@ export default function ProjectFeedbackPage({ params }: { params: Promise<{ id: 
 
             <div className="bg-background rounded-lg border shadow-sm p-6">
                 <h2 className="text-xl font-semibold mb-4">Feedback ({feedbacks.length})</h2>
-                <FeedbackTable feedbacks={feedbacks} />
+                <FeedbackTable feedbacks={feedbacks} onFeedbackUpdate={fetchData} />
             </div>
         </div>
     )

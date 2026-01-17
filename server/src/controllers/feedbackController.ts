@@ -53,4 +53,24 @@ export const FeedbackController = {
             res.status(500).json({ error: 'Failed to fetch feedback' });
         }
     },
+    async analyzeSentiment(req: Request, res: Response) {
+        try {
+            if (!req.user) {
+                return res.status(401).json({ error: 'Unauthorized' });
+            }
+            const { id } = req.params as { id: string };
+
+            const updatedFeedback = await FeedbackService.analyzeSentiment(id);
+            res.json(updatedFeedback);
+        } catch (error: any) {
+            console.error(error);
+            if (error.message === 'GEMINI_API_KEY is not set') {
+                return res.status(500).json({ error: 'AI configuration missing' });
+            }
+            if (error.message === 'Feedback not found') {
+                return res.status(404).json({ error: 'Feedback not found' });
+            }
+            res.status(500).json({ error: 'Failed to analyze sentiment' });
+        }
+    }
 };

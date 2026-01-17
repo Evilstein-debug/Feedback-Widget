@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import {
     IconBolt,
     IconWorld,
-    IconShieldCheck,
+    IconMoodSmile,
     IconLayoutDashboard,
     IconMoon,
     IconBrandGithub,
@@ -25,10 +25,10 @@ export default function FeaturesSectionDemo() {
             icon: <IconWorld />,
         },
         {
-            title: "Secure & Private",
+            title: "Sentiment Analysis",
             description:
-                "Your secrets stay safe. We use secure project keys and validate all data server-side.",
-            icon: <IconShieldCheck />,
+                "Understand user emotions instantly. Our AI analyzes feedback sentiment to help you prioritize effectively.",
+            icon: <IconMoodSmile />,
         },
         {
             title: "Feedback Dashboard",
