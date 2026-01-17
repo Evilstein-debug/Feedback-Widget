@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { FeedbackService } from '../services/feedbackService';
-import { ProjectService } from '../services/projectService';
-import { FeedbackType } from '../../generated/prisma/client/client';
+import { FeedbackService } from '../services/feedbackService.js';
+import { ProjectService } from '../services/projectService.js';
+import { FeedbackType } from '../../generated/prisma/client/client.js';
 
 export const FeedbackController = {
     // Public Widget Endpoint

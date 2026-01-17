@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import rateLimit from 'express-rate-limit';
-import { FeedbackController } from '../controllers/feedbackController';
+import { FeedbackController } from '../controllers/feedbackController.js';
 
 const router = Router();
 

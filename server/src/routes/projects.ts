@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { ProjectController } from '../controllers/projectController';
-import { FeedbackController } from '../controllers/feedbackController';
+import { ProjectController } from '../controllers/projectController.js';
+import { FeedbackController } from '../controllers/feedbackController.js';
 
 const router = Router();
 

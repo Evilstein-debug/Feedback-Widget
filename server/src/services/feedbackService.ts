@@ -1,5 +1,5 @@
-import { db } from '../config/db';
-import { FeedbackType } from '../../generated/prisma/client/client';
+import { db } from '../config/db.js';
+import { FeedbackType } from '../../generated/prisma/client/client.js';
 
 export const FeedbackService = {
     async createFeedback(projectKey: string, type: FeedbackType, message: string, userName?: string, userEmail?: string) {

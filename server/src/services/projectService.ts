@@ -1,4 +1,4 @@
-import { db } from '../config/db';
+import { db } from '../config/db.js';
 
 export const ProjectService = {
     async createProject(userId: string, name: string) {
