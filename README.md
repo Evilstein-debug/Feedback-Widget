@@ -8,10 +8,10 @@ A comprehensive, full-stack solution for collecting, managing, and analyzing use
 
 ## 🚀 Key Features
 
-*   **⚡ Universal Embeddable Widget**: A lightweight (<15kb), high-performance widget built with Preact and Vite that works on any website (React, Vue, plain HTML, etc.).
+*   **⚡ Universal Embeddable Widget**: A lightweight, high-performance widget built with Preact and Vite that works on any website (React, Vue, plain HTML, etc.).
 *   **🧠 AI-Powered Sentiment Analysis**: Automatically analyzes user feedback using **Google Gemini 1.5 Flash** to classify sentiment (Positive, Negative, Neutral, Frustrated, Happy, Urgent).
 *   **📊 Powerful Dashboard**: A modern, responsive dashboard built with Next.js and Shadcn UI to view, filter, and manage feedback.
-*   **🔒 Secure & Private**: Project-based isolation with secure API keys. All data is validated server-side.
+*   **🔒 Secure & Private**: Project-based isolation with secure project keys. All data is validated server-side.
 *   **🌓 Dark Mode Support**: Fully localized dark mode support for both the dashboard and the widget.
 *   **📝 Rich Feedback Types**: Supports Bug Reports, Feature Requests, and General Feedback with user contact details.
 
@@ -28,7 +28,7 @@ The project is structured as a monorepo with three distinct applications:
 2.  **Server (`/server`)**:
     *   **Runtime**: Node.js & Express
     *   **Database**: PostgreSQL with [Prisma ORM](https://www.prisma.io/)
-    *   **AI**: Google GenAI SDK (Gemini 1.5 Flash)
+    *   **AI**: Google GenAI SDK (Gemini 2.5 Flash)
     *   **Role**: Handles API requests, serves the widget script, performs sentiment analysis, and manages database interactions.
 
 3.  **Widget (`/widget`)**:
@@ -63,16 +63,17 @@ The project is structured as a monorepo with three distinct applications:
 The magic of this project lies in how the widget is delivered and integrated:
 
 1.  **Development**: The widget is developed in the `widget` folder using Preact for speed and small size.
-2.  **Compilation**: When built (`npm run build` in `/widget`), Vite bundles the code into a single `widget.umd.cjs` file.
+2.  **Compilation**: When built (`npm run build` in `/widget`), Vite bundles the code into a single `widget.js` file.
 3.  **Serving**: This bundled script is copied to the `server/public` directory. The Express backend serves this file statically.
 4.  **Embedding**: Users include a simple script tag on their website:
     ```html
-    <script src="https://your-backend-url.com/widget.umd.cjs" data-project-id="YOUR_PROJECT_ID"></script>
+    <script src="https://feedback-widget-h9cr.onrender.com/widget.js"></script>
+    <feedback-widget project-key="your-project-key"></feedback-widget>
     ```
 5.  **Initialization**: When the script loads on the client's site, it:
     *   Injects a Shadow DOM container (isolating styles).
     *   Mounts the widget UI.
-    *   Reads the `data-project-id` to authorize API calls.
+    *   Reads the `project-key` to authorize API calls.
 
 ## 🛠️ Getting Started
 
