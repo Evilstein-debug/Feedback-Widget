@@ -3,8 +3,10 @@
 import { useSession, signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { MessageSquare, ArrowRight } from "lucide-react"
+import FeaturesSectionDemo from "@/components/ui/features-section-demo-2"
 
 export default function Home() {
   const { data: session } = useSession()
@@ -17,24 +19,75 @@ export default function Home() {
   }, [session, router])
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-muted/40">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        {/* Background pattern or something cool here */}
-      </div>
-
-      <Card className="w-[350px]">
-        <CardHeader>
-          <CardTitle>YBM Feedback</CardTitle>
-          <CardDescription>Collect and manage user feedback seamlessly.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid w-full items-center gap-4">
-            <Button className="w-full" onClick={() => signIn("google")}>
-              Sign in with Google
-            </Button>
+    <main className="flex min-h-screen flex-col bg-white">
+      {/* Navigation */}
+      <nav className="flex items-center justify-between px-6 py-4 md:px-12 border-b border-neutral-100">
+        <Link href="/" className="flex items-center gap-2">
+          <div className="h-8 w-8 bg-black rounded-lg flex items-center justify-center text-white">
+            <MessageSquare size={18} fill="currentColor" />
           </div>
-        </CardContent>
-      </Card>
+          <span className="font-bold text-lg tracking-tight">FeedbackWidget</span>
+        </Link>
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" className="text-sm font-medium hover:bg-neutral-100" onClick={() => signIn("google")}>
+            Log in
+          </Button>
+          <Button className="text-sm font-medium bg-black hover:bg-neutral-800 text-white rounded-full px-6" onClick={() => signIn("google")}>
+            Get Started
+          </Button>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="flex-1 flex flex-col items-center justify-center text-center px-4 pt-20 pb-16 md:pt-32 md:pb-24 max-w-5xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-xs font-medium text-neutral-600 mb-4 hover:bg-neutral-200 transition-colors cursor-default">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+          </span>
+          v1.0 is now live
+        </div>
+
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
+          Collect feedback <br className="hidden md:block" />
+          <span className="text-neutral-400">seamlessly.</span>
+        </h1>
+
+        <p className="text-lg md:text-xl text-neutral-500 max-w-2xl mx-auto leading-relaxed">
+          The easiest way to add a feedback widget to your website.
+          <br className="hidden md:block" />
+          Zero config, lightweight, and works with any framework.
+        </p>
+
+        <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
+          <Button
+            size="lg"
+            className="h-12 px-8 rounded-full bg-black text-white hover:bg-neutral-800 hover:scale-105 transition-all duration-300 shadow-lg shadow-neutral-500/20 text-base"
+            onClick={() => signIn("google")}
+          >
+            Start for free
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      </section>
+
+      {/* Features Grid */}
+      <section className="px-4 py-20 bg-neutral-50 border-t border-neutral-100">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-bold tracking-tight text-neutral-900 md:text-4xl">
+            Our Features
+          </h2>
+          <p className="mt-4 text-lg text-neutral-500">
+            Everything you need to collect and manage feedback.
+          </p>
+        </div>
+        <FeaturesSectionDemo />
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 px-6 border-t border-neutral-100 text-center text-sm text-neutral-400">
+        <p>&copy; {new Date().getFullYear()} FeedbackWidget. Built for the modern web with ❤️ by <a href="https://tejaspathak.tech" target="_blank" rel="noopener noreferrer" className="underline">Tejas Pathak</a>.</p>
+      </footer>
     </main>
   )
 }
