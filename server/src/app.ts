@@ -11,9 +11,15 @@ app.use(cors({
 app.use(express.json());
 
 import routes from './routes';
+import path from 'path';
 
 // Routes
 app.use('/api', routes);
+
+//the final embeddable widget is served from this static folder
+app.use(
+    express.static(path.join(__dirname, "../public"))
+);
 
 // Health Check
 app.get('/health', (req, res) => {

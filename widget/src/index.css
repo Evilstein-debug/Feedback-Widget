@@ -1,0 +1,12 @@
+@tailwind utilities;
+
+/* Ensure popover and other elements have high z-index and reset styles if needed */
+:host {
+  display: block;
+  all: initial;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+:host * {
+  box-sizing: border-box;
+}
