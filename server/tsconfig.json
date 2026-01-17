@@ -9,10 +9,10 @@
         "esModuleInterop": true
     },
     "include": [
-        "src/**/*"
+        "src/**/*",
+        "generated/**/*"
     ],
     "exclude": [
-        "node_modules",
-        "generated"
+        "node_modules"
     ]
 }

@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "tsx --watch src/server.ts",
-    "build": "tsc",
+    "build": "tsc && find dist -name \"*.js\" -exec sed -i '' -e 's/\\.ts\"/\\.js\"/g' -e \"s/\\.ts'/\\.js'/g\" {} +",
     "start": "node dist/src/server.js"
   },
   "devDependencies": {
