@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useSession } from "next-auth/react"
@@ -8,7 +7,16 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Plus } from "lucide-react"
+import { Plus, Code2, Copy, Check } from "lucide-react"
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { toast } from "sonner"
 
 interface Project {
     id: string
@@ -24,6 +32,7 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(true)
     const [newProjectName, setNewProjectName] = useState("")
     const [creating, setCreating] = useState(false)
+    const [copiedId, setCopiedId] = useState<string | null>(null)
 
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api"
 
@@ -55,6 +64,19 @@ export default function Dashboard() {
         } finally {
             setLoading(false)
         }
+    }
+
+    const copyToClipboard = (text: string, id: string) => {
+        navigator.clipboard.writeText(text)
+        setCopiedId(id)
+        toast.success("Code copied to clipboard")
+        setTimeout(() => setCopiedId(null), 2000)
+    }
+
+    const getEmbedCode = (projectKey: string) => {
+        const origin = "https://feedback-widget-h9cr.onrender.com"
+        return `<script src="${origin}/widget.js"></script>
+<feedback-widget project-key="${projectKey}"></feedback-widget>`
     }
 
     const createProject = async (e: React.FormEvent) => {
@@ -90,6 +112,7 @@ export default function Dashboard() {
 
     return (
         <div className="flex min-h-screen flex-col p-8 bg-muted/20">
+            {/* Header ... */}
             <header className="flex items-center justify-between mb-8">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
@@ -102,7 +125,7 @@ export default function Dashboard() {
             </header>
 
             <div className="grid gap-8 md:grid-cols-3">
-                {/* Create Project Card */}
+                {/* Create Project Card ... */}
                 <Card className="md:col-span-1 h-fit">
                     <CardHeader>
                         <CardTitle>Create Project</CardTitle>
@@ -144,14 +167,49 @@ export default function Dashboard() {
                                     <CardHeader className="pb-2">
                                         <div className="flex items-center justify-between">
                                             <CardTitle className="text-lg">{project.name}</CardTitle>
-                                            <div className="text-xs font-mono bg-muted px-2 py-1 rounded">
-                                                ID: {project.projectKey}
-                                            </div>
+                                            <Dialog>
+                                                <DialogTrigger asChild>
+                                                    <Button variant="outline" size="sm" className="gap-2">
+                                                        <Code2 className="h-4 w-4" />
+                                                        Show Code
+                                                    </Button>
+                                                </DialogTrigger>
+                                                <DialogContent className="sm:max-w-3xl">
+                                                    <DialogHeader>
+                                                        <DialogTitle>Embed Code</DialogTitle>
+                                                        <DialogDescription>
+                                                            Copy and paste this code into your website's HTML to add the widget.
+                                                        </DialogDescription>
+                                                    </DialogHeader>
+                                                    <div className="relative mt-2">
+                                                        <pre className="p-4 rounded-lg bg-muted font-mono text-sm overflow-x-auto border">
+                                                            <code>{getEmbedCode(project.projectKey)}</code>
+                                                        </pre>
+                                                        <Button
+                                                            size="icon"
+                                                            variant="ghost"
+                                                            className="absolute top-2 right-2 h-8 w-8 hover:bg-background"
+                                                            onClick={() => copyToClipboard(getEmbedCode(project.projectKey), project.id)}
+                                                        >
+                                                            {copiedId === project.id ? (
+                                                                <Check className="h-4 w-4 text-green-500" />
+                                                            ) : (
+                                                                <Copy className="h-4 w-4" />
+                                                            )}
+                                                        </Button>
+                                                    </div>
+                                                </DialogContent>
+                                            </Dialog>
                                         </div>
                                         <CardDescription>Created on {new Date(project.createdAt).toLocaleDateString()}</CardDescription>
                                     </CardHeader>
+                                    <CardContent>
+                                        <div className="text-xs font-mono bg-muted/50 px-2 py-1 rounded w-fit text-muted-foreground">
+                                            ID: {project.projectKey}
+                                        </div>
+                                    </CardContent>
                                     <CardFooter>
-                                        <Button variant="secondary" size="sm" onClick={() => router.push(`/projects/${project.id}`)}>
+                                        <Button variant="secondary" size="sm" onClick={() => router.push(`/projects/${project.id}`)} className="w-full">
                                             View Feedbacks
                                         </Button>
                                     </CardFooter>
