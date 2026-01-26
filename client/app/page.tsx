@@ -26,7 +26,7 @@ export default function Home() {
           <div className="h-8 w-8 bg-black rounded-lg flex items-center justify-center text-white">
             <MessageSquare size={18} fill="currentColor" />
           </div>
-          <span className="font-bold text-lg tracking-tight">FeedbackWidget</span>
+          <span className="font-bold text-lg tracking-tight">Sayback</span>
         </Link>
         <div className="flex items-center gap-4">
           <Button variant="ghost" className="text-sm font-medium hover:bg-neutral-100" onClick={() => signIn("google")}>
@@ -86,7 +86,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="py-12 px-6 border-t border-neutral-100 text-center text-sm text-neutral-400">
-        <p>&copy; {new Date().getFullYear()} FeedbackWidget. Built for the modern web with ❤️ by <a href="https://tejaspathak.tech" target="_blank" rel="noopener noreferrer" className="underline">Tejas Pathak</a>.</p>
+        <p>&copy; {new Date().getFullYear()} Sayback. Built for the modern web with ❤️ by <a href="https://tejaspathak.tech" target="_blank" rel="noopener noreferrer" className="underline">Tejas Pathak</a>.</p>
       </footer>
     </main>
   )

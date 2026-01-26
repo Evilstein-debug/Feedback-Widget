@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "YBM Feedback",
+  title: "Sayback",
   description: "Collect user feedback easily.",
 };
 

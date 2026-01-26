@@ -1,4 +1,4 @@
-# Feedback Widget - Open Source Feedback Collection System
+# Sayback - Open Source Feedback Collection System
 
 ![Platform](https://img.shields.io/badge/platform-Web-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
