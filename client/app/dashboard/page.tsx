@@ -203,14 +203,14 @@ export default function Dashboard() {
                                                         Show Code
                                                     </Button>
                                                 </DialogTrigger>
-                                                <DialogContent className="sm:max-w-3xl">
-                                                    <DialogHeader>
+                                                <DialogContent className="max-w-sm sm:max-w-3xl">
+                                                    <DialogHeader className="max-w-xs sm:max-w-3xl">
                                                         <DialogTitle>Embed Code</DialogTitle>
                                                         <DialogDescription>
                                                             Copy and paste this code into your website's HTML to add the widget.
                                                         </DialogDescription>
                                                     </DialogHeader>
-                                                    <div className="relative mt-2">
+                                                    <div className="max-w-xs sm:max-w-3xl relative mt-2">
                                                         <pre className="p-4 rounded-lg bg-muted font-mono text-sm overflow-x-auto border">
                                                             <code>{getEmbedCode(project.projectKey)}</code>
                                                         </pre>
