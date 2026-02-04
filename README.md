@@ -9,10 +9,9 @@ A comprehensive, full-stack solution for collecting, managing, and analyzing use
 ## 🚀 Key Features
 
 *   **⚡ Universal Embeddable Widget**: A lightweight, high-performance widget built with Preact and Vite that works on any website (React, Vue, plain HTML, etc.).
-*   **🧠 AI-Powered Sentiment Analysis**: Automatically analyzes user feedback using **Google Gemini 1.5 Flash** to classify sentiment (Positive, Negative, Neutral, Frustrated, Happy, Urgent).
+*   **🧠 AI-Powered Sentiment Analysis**: Automatically analyzes user feedback using **Google Gemini 2.5 Flash** to classify sentiment (Positive, Negative, Neutral, Frustrated, Happy, Urgent).
 *   **📊 Powerful Dashboard**: A modern, responsive dashboard built with Next.js and Shadcn UI to view, filter, and manage feedback.
 *   **🔒 Secure & Private**: Project-based isolation with secure project keys. All data is validated server-side.
-*   **🌓 Dark Mode Support**: Fully localized dark mode support for both the dashboard and the widget.
 *   **📝 Rich Feedback Types**: Supports Bug Reports, Feature Requests, and General Feedback with user contact details.
 
 ## 🏗️ Technical Architecture
