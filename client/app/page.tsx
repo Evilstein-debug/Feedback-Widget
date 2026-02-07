@@ -4,8 +4,9 @@ import { useSession, signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { MessageSquare, ArrowRight } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import FeaturesSectionDemo from "@/components/ui/features-section-demo-2"
 
 export default function Home() {
@@ -23,8 +24,13 @@ export default function Home() {
       {/* Navigation */}
       <nav className="flex items-center justify-between px-6 py-4 md:px-12 border-b border-neutral-100">
         <Link href="/" className="flex items-center gap-2">
-          <div className="h-8 w-8 bg-black rounded-lg flex items-center justify-center text-white">
-            <MessageSquare size={18} fill="currentColor" />
+          <div className="relative h-8 w-8">
+            <Image
+              src="/favicon.ico"
+              alt="Sayback Logo"
+              fill
+              className="object-contain rounded-md"
+            />
           </div>
           <span className="font-bold text-lg tracking-tight">Sayback</span>
         </Link>
