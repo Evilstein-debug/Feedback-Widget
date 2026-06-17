@@ -18,29 +18,32 @@ export function ProfileButton({ session }: ProfileButtonProps) {
             <PopoverTrigger asChild>
                 <button
                     id="profile-menu-trigger"
-                    className="flex items-center gap-2.5 rounded-lg border bg-background px-3 py-1.5 text-sm font-medium shadow-sm transition-all hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="flex items-center gap-2.5 rounded-lg border bg-background px-3 py-1.5 text-sm font-medium shadow-sm transition-all hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring text-left w-auto"
                     aria-label="Open profile menu"
                 >
-                    {session?.user?.image ? (
-                        <img
-                            src={session.user.image}
-                            alt={session.user.name ?? "User"}
-                            className="h-7 w-7 rounded-xl object-cover"
-                            referrerPolicy="no-referrer"
-                        />
-                    ) : (
-                        <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-neutral-800 text-xs font-semibold text-white select-none">
-                            {session?.user?.name?.[0]?.toUpperCase() ?? "U"}
-                        </span>
-                    )}
-                    <span className="max-w-[140px] truncate">{session?.user?.name}</span>
+                    {/* Avatar — fixed size, stays top-aligned when name wraps */}
+                    <span className="mt-0.5 shrink-0">
+                        {session?.user?.image ? (
+                            <img
+                                src={session.user.image}
+                                alt={session.user.name ?? "User"}
+                                className="h-7 w-7 rounded-xl object-cover"
+                                referrerPolicy="no-referrer"
+                            />
+                        ) : (
+                            <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-neutral-800 text-xs font-semibold text-white select-none">
+                                {session?.user?.name?.[0]?.toUpperCase() ?? "U"}
+                            </span>
+                        )}
+                    </span>
+                    <span className="wrap-break-word">{session?.user?.name}</span>
                 </button>
             </PopoverTrigger>
 
             <PopoverContent align="end" className="w-56 p-2" sideOffset={8}>
                 <div className="px-2 py-2 mb-1">
-                    <p className="text-sm font-semibold truncate">{session?.user?.name}</p>
-                    <p className="text-xs text-muted-foreground truncate mt-0.5">{session?.user?.email}</p>
+                    <p className="text-sm font-semibold wrap-break-word">{session?.user?.name}</p>
+                    <p className="text-xs text-muted-foreground break-all mt-0.5">{session?.user?.email}</p>
                 </div>
                 <div className="border-t my-1" />
                 <button

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { FeedbackTable } from "@/components/feedback-table"
 import { ArrowLeft } from "lucide-react"
 import { PageLoader, FeedbackTableSkeleton } from "@/components/ui/page-loader"
-import { ProfileButton } from "@/components/ui/profile-button"
+import { AppNav } from "@/components/ui/app-nav"
 
 interface Project {
     id: string
@@ -84,33 +84,36 @@ export default function ProjectFeedbackPage({ params }: { params: Promise<{ id: 
     }
 
     return (
-        <div className="flex min-h-screen flex-col p-8 bg-muted/20">
-            <header className="flex items-center justify-between mb-8">
-                <div className="flex items-center gap-4">
-                    <Button variant="ghost" size="icon" onClick={() => router.push("/dashboard")}>
-                        <ArrowLeft className="h-5 w-5" />
+        <div className="flex min-h-screen flex-col bg-muted/20">
+            <AppNav session={session} />
+
+            <div className="flex flex-col px-4 py-6 sm:p-8">
+                <header className="flex items-start gap-3 mb-8">
+                    <Button
+                        variant="outline"
+                        className="shrink-0 flex items-center gap-2 rounded-lg mt-0.5"
+                        onClick={() => router.push("/dashboard")}
+                    >
+                        <ArrowLeft className="h-4 w-4" />
                     </Button>
-                    <div>
-                        <h1 className="text-3xl font-bold tracking-tight">{project.name}</h1>
-                        <p className="text-muted-foreground flex items-center gap-2">
-                            Project Key: <code className="bg-muted px-1 py-0.5 rounded font-mono text-xs">{project.projectKey}</code>
+                    <div className="min-w-0">
+                        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight break-words">{project.name}</h1>
+                        <p className="text-muted-foreground flex flex-wrap items-center gap-2 mt-0.5">
+                            Project Key: <code className="bg-muted px-1 py-0.5 rounded font-mono text-xs break-all">{project.projectKey}</code>
                         </p>
                     </div>
-                </div>
-                <div className="flex items-center gap-4">
-                    <ProfileButton session={session} />
-                </div>
-            </header>
+                </header>
 
-            <div className="bg-background rounded-lg border shadow-sm p-6">
-                <h2 className="text-xl font-semibold mb-4">
-                    Feedback {!loading && `(${feedbacks.length})`}
-                </h2>
-                {loading ? (
-                    <FeedbackTableSkeleton />
-                ) : (
-                    <FeedbackTable feedbacks={feedbacks} onFeedbackUpdate={fetchData} />
-                )}
+                <div className="bg-background rounded-lg border shadow-sm p-6">
+                    <h2 className="text-xl font-semibold mb-4">
+                        Feedback {!loading && `(${feedbacks.length})`}
+                    </h2>
+                    {loading ? (
+                        <FeedbackTableSkeleton />
+                    ) : (
+                        <FeedbackTable feedbacks={feedbacks} onFeedbackUpdate={fetchData} />
+                    )}
+                </div>
             </div>
         </div>
     )
