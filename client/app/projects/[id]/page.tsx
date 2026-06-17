@@ -97,7 +97,7 @@ export default function ProjectFeedbackPage({ params }: { params: Promise<{ id: 
                         <ArrowLeft className="h-4 w-4" />
                     </Button>
                     <div className="min-w-0">
-                        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight break-words">{project.name}</h1>
+                        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight wrap-break-word">{project.name}</h1>
                         <p className="text-muted-foreground flex flex-wrap items-center gap-2 mt-0.5">
                             Project Key: <code className="bg-muted px-1 py-0.5 rounded font-mono text-xs break-all">{project.projectKey}</code>
                         </p>
