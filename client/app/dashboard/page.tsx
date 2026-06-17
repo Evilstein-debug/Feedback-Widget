@@ -8,6 +8,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter }
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Plus, Code2, Copy, Check } from "lucide-react"
+import { PageLoader, ProjectCardsSkeleton } from "@/components/ui/page-loader"
+import { ProfileButton } from "@/components/ui/profile-button"
 import {
     Dialog,
     DialogContent,
@@ -16,17 +18,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
 import { toast } from "sonner"
 
 interface Project {
@@ -117,8 +108,8 @@ export default function Dashboard() {
         }
     }
 
-    if (status === "loading" || loading && session) {
-        return <div className="flex min-h-screen items-center justify-center">Loading...</div>
+    if (status === "loading") {
+        return <PageLoader message="Authenticating" />
     }
 
     return (
@@ -130,26 +121,7 @@ export default function Dashboard() {
                     <p className="text-muted-foreground text-lg">Manage your projects and feedbacks.</p>
                 </div>
                 <div className="flex items-center gap-4">
-                    <div className="text-sm font-medium">{session?.user?.name}</div>
-                    <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                            <Button variant="outline">Sign out</Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                            <AlertDialogHeader>
-                                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                                <AlertDialogDescription>
-                                    This will sign you out of your account. You will need to sign in again to access your dashboard.
-                                </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction onClick={() => signOut({ callbackUrl: "/" })}>
-                                    Sign out
-                                </AlertDialogAction>
-                            </AlertDialogFooter>
-                        </AlertDialogContent>
-                    </AlertDialog>
+                    <ProfileButton session={session} />
                 </div>
             </header>
 
@@ -184,8 +156,12 @@ export default function Dashboard() {
 
                 {/* Existing Projects List */}
                 <div className="md:col-span-2 grid gap-6">
-                    <h2 className="text-xl font-semibold">Your Projects ({projects.length})</h2>
-                    {projects.length === 0 ? (
+                    <h2 className="text-xl font-semibold">
+                        Your Projects {!loading && `(${projects.length})`}
+                    </h2>
+                    {loading ? (
+                        <ProjectCardsSkeleton />
+                    ) : projects.length === 0 ? (
                         <div className="text-center py-12 border rounded-lg bg-background text-muted-foreground">
                             No projects yet. Create one to get started!
                         </div>

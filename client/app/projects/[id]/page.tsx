@@ -5,7 +5,9 @@ import { useRouter, useParams } from "next/navigation" // Using useParams hook f
 import { useEffect, useState, use } from "react"
 import { Button } from "@/components/ui/button"
 import { FeedbackTable } from "@/components/feedback-table"
-import { ArrowLeft, Loader2 } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
+import { PageLoader, FeedbackTableSkeleton } from "@/components/ui/page-loader"
+import { ProfileButton } from "@/components/ui/profile-button"
 
 interface Project {
     id: string
@@ -74,11 +76,7 @@ export default function ProjectFeedbackPage({ params }: { params: Promise<{ id: 
     }
 
     if (status === "loading" || loading) {
-        return (
-            <div className="flex min-h-screen items-center justify-center">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            </div>
-        )
+        return <PageLoader message="Loading project" />
     }
 
     if (!project) {
@@ -100,13 +98,19 @@ export default function ProjectFeedbackPage({ params }: { params: Promise<{ id: 
                     </div>
                 </div>
                 <div className="flex items-center gap-4">
-                    <div className="text-sm font-medium">{session?.user?.name}</div>
+                    <ProfileButton session={session} />
                 </div>
             </header>
 
             <div className="bg-background rounded-lg border shadow-sm p-6">
-                <h2 className="text-xl font-semibold mb-4">Feedback ({feedbacks.length})</h2>
-                <FeedbackTable feedbacks={feedbacks} onFeedbackUpdate={fetchData} />
+                <h2 className="text-xl font-semibold mb-4">
+                    Feedback {!loading && `(${feedbacks.length})`}
+                </h2>
+                {loading ? (
+                    <FeedbackTableSkeleton />
+                ) : (
+                    <FeedbackTable feedbacks={feedbacks} onFeedbackUpdate={fetchData} />
+                )}
             </div>
         </div>
     )
